@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<launch>
+
+    <!--打开云台相机-->
+    <node pkg = "pan_tilt_camera" type = "Pan_Tilt_Camera_NODE" name = "hg_camera" output="screen">
+        <param name="cam_ip" value="192.168.5.64" />
+        <param name="user_name" value="admin" />
+        <param name="password" value="abcd1234" />
+        <param name="user_log" value="$(find pan_tilt_camera)/record/sdkLog" />
+        <param name="record_video" value="$(find pan_tilt_camera)/record/yuntai.mp4" />
+        <param name="record_dat" value="$(find pan_tilt_camera)/record/ps.dat" />
+
+        <param name="image_name" value="$(find pan_tilt_camera)/img/image_" />
+        <param name="image_type" value=".jpeg" />
+
+    </node>
+
+</launch>

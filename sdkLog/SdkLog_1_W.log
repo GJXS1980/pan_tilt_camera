@@ -1,0 +1,20 @@
+[2021-04-29 10:43:32.443][INF] The COM:HCCoreBase ver is 6.1.4.15, 2020_03_05. Async:1.
+[2021-04-29 10:43:32.443][INF] The COM:Core ver is 6.1.6.4, 2020_12_31. Async:1.
+[2021-04-29 10:43:32.443][INF] This HCNetSDK ver is 6.1.6.4 Ver 2020_12_31.
+[2021-04-29 10:43:32.443][INF] Login dev 192.168.1.64:8000.
+[2021-04-29 10:43:32.443][INF] dwTotalNum[2048]
+[2021-04-29 10:43:32.445][INF] Private connect 192.168.1.64:8000 sock=37 this=0x740ea9c4 cmd=0x10000 port=58084
+[2021-04-29 10:43:32.445][INF] LogonDev1 in[192.168.1.64:8000]
+[2021-04-29 10:43:32.445][DBG] CCoreGlobalCtrlBase::LoadDSo, HPR_LoadDSo Succ, Path[/home/hb/Desktop/IOT/CH-HCNetSDKV6.1.6.4_build20201231_linux64/psdatacall_demo/./libcrypto.so], hHandleRet[1947158608]
+[2021-04-29 10:43:32.446][DBG] CCoreGlobalCtrlBase::LoadDSo, HPR_LoadDSo Succ, Path[/home/hb/Desktop/IOT/CH-HCNetSDKV6.1.6.4_build20201231_linux64/psdatacall_demo/./libssl.so], hHandleRet[1947160320]
+[2021-04-29 10:43:32.446][INF] SSLTRANSAPI::LoadAPI, libeay, Load Real Path[/home/hb/Desktop/IOT/CH-HCNetSDKV6.1.6.4_build20201231_linux64/psdatacall_demo/./libcrypto.so]
+[2021-04-29 10:43:32.446][INF] SSLTRANSAPI::LoadAPI, libssl, Load Real Path[/home/hb/Desktop/IOT/CH-HCNetSDKV6.1.6.4_build20201231_linux64/psdatacall_demo/./libssl.so]
+[2021-04-29 10:43:32.446][ERR] SSLTRANSAPI::IsAllAPILoaded, OpenSSL_version Unload
+[2021-04-29 10:43:32.446][ERR] OpenSSL, Not All Function Loaded!
+[2021-04-29 10:43:32.446][INF] SSLTRANSAPI::PrintVersion, SSLeay_version info [OpenSSL 1.0.2t  10 Sep 2019]
+[2021-04-29 10:43:32.446][INF] CSSLTrans::SSLCtxInit, dwSSLVersion[0], m_fnClientMethodV23
+[2021-04-29 10:43:42.442][DBG] CComBase::Load, Load szDllPath[/home/hb/Desktop/IOT/CH-HCNetSDKV6.1.6.4_build20201231_linux64/psdatacall_demo/./HCNetSDKCom/libHCPreview.so] SUCC
+[2021-04-29 10:43:42.442][INF] AbilityAnalyze---Init-- start
+[2021-04-29 10:43:42.445][DBG] AbilityAnalyze---Init-- over, DeviceList path [/home/hb/Desktop/IOT/CH-HCNetSDKV6.1.6.4_build20201231_linux64/psdatacall_demo/HCNetSDKCom/LocalXml/DeviceList.xml], load result[0]
+[2021-04-29 10:43:42.445][INF] The COM:Preview ver is 6.1.6.4, 2020_12_31.
+[2021-04-29 10:43:42.446][INF] Private connect 192.168.1.64:8000 sock=37 this=0x740ea9c4 cmd=0x30203 port=58086

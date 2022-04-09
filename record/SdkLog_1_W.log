@@ -1,0 +1,27 @@
+[2021-04-25 17:25:01.766][INF] The COM:HCCoreBase ver is 6.1.4.15, 2020_03_05. Async:1.
+[2021-04-25 17:25:01.766][INF] The COM:Core ver is 6.1.6.4, 2020_12_31. Async:1.
+[2021-04-25 17:25:01.766][INF] This HCNetSDK ver is 6.1.6.4 Ver 2020_12_31.
+[2021-04-25 17:25:01.766][INF] Login dev 192.168.1.64:8000.
+[2021-04-25 17:25:01.766][INF] dwTotalNum[2048]
+[2021-04-25 17:25:01.767][INF] Private connect 192.168.1.64:8000 sock=35 this=0x170250e4 cmd=0x10000 port=33498
+[2021-04-25 17:25:01.767][INF] LogonDev1 in[192.168.1.64:8000]
+[2021-04-25 17:25:01.768][DBG] CCoreGlobalCtrlBase::LoadDSo, HPR_LoadDSo Succ, Path[/home/hb/Desktop/IOT/CH-HCNetSDKV6.1.6.4_build20201231_linux64/psdatacall_demo/./libcrypto.so], hHandleRet[386068336]
+[2021-04-25 17:25:01.768][DBG] CCoreGlobalCtrlBase::LoadDSo, HPR_LoadDSo Succ, Path[/home/hb/Desktop/IOT/CH-HCNetSDKV6.1.6.4_build20201231_linux64/psdatacall_demo/./libssl.so], hHandleRet[386069728]
+[2021-04-25 17:25:01.768][INF] SSLTRANSAPI::LoadAPI, libeay, Load Real Path[/home/hb/Desktop/IOT/CH-HCNetSDKV6.1.6.4_build20201231_linux64/psdatacall_demo/./libcrypto.so]
+[2021-04-25 17:25:01.768][INF] SSLTRANSAPI::LoadAPI, libssl, Load Real Path[/home/hb/Desktop/IOT/CH-HCNetSDKV6.1.6.4_build20201231_linux64/psdatacall_demo/./libssl.so]
+[2021-04-25 17:25:01.768][ERR] SSLTRANSAPI::IsAllAPILoaded, OpenSSL_version Unload
+[2021-04-25 17:25:01.768][ERR] OpenSSL, Not All Function Loaded!
+[2021-04-25 17:25:01.768][INF] SSLTRANSAPI::PrintVersion, SSLeay_version info [OpenSSL 1.0.2t  10 Sep 2019]
+[2021-04-25 17:25:01.768][INF] CSSLTrans::SSLCtxInit, dwSSLVersion[0], m_fnClientMethodV23
+[2021-04-25 17:25:01.915][DBG] CComBase::Load, Load szDllPath[/home/hb/Desktop/IOT/CH-HCNetSDKV6.1.6.4_build20201231_linux64/psdatacall_demo/./HCNetSDKCom/libHCPreview.so] SUCC
+[2021-04-25 17:25:01.915][INF] AbilityAnalyze---Init-- start
+[2021-04-25 17:25:01.915][DBG] AbilityAnalyze---Init-- over, DeviceList path [/home/hb/Desktop/IOT/CH-HCNetSDKV6.1.6.4_build20201231_linux64/psdatacall_demo/HCNetSDKCom/LocalXml/DeviceList.xml], load result[0]
+[2021-04-25 17:25:01.916][INF] The COM:Preview ver is 6.1.6.4, 2020_12_31.
+[2021-04-25 17:25:01.916][INF] Private connect 192.168.1.64:8000 sock=35 this=0x170250e4 cmd=0x30000 port=33500
+[2021-04-25 17:25:01.921][INF] ID-IP-CHAN[0-192.168.1.64-1] [CGetTCPStream::Start] Stream Head Data Callback Start
+[2021-04-25 17:25:01.921][INF] ID-IP-CHAN[0-192.168.1.64-1] [CGetTCPStream::Start] Stream Head Data Callback End
+[2021-04-25 17:25:01.921][INF] CCoreGlobalCtrl::LoadDSo, enumDllType[2], cTempPath[/home/hb/Desktop/IOT/CH-HCNetSDKV6.1.6.4_build20201231_linux64/psdatacall_demo/./HCNetSDKCom/]
+[2021-04-25 17:25:01.921][DBG] CCoreGlobalCtrl::LoadDSo, HPR_LoadDSo, hHandleRet[386653456], enumDllType[2], Path[libSystemTransform.so], syserror[115]
+[2021-04-25 17:25:01.921][INF] CStreamConvert::LoadConvertLib Load Succ, m_iInitCount = 1
+[2021-04-25 17:25:01.922][DBG] ID-IP-CHAN[0-192.168.1.64-1] RTP Format
+[2021-04-25 17:25:01.961][ERR] CStreamConvert::Convert SYSTRANS_InputData fail 1751969728 [0x800000ff], dataLen[332]
