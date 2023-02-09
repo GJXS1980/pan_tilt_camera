@@ -313,10 +313,10 @@ void *RunIPCameraInfo(void*)
       if (!image.empty())
       {
         //  修改图片尺寸大小（像素为640*480）
-        // cv::resize(image, dst_img,  cv::Size(640, 480), 0, 0, cv::INTER_LINEAR);
-        imshow("image", image);  
+        cv::resize(image, dst_img,  cv::Size(640, 480), 0, 0, cv::INTER_LINEAR);
+        imshow("image", dst_img);  
 
-        msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", image).toImageMsg();
+        msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", dst_img).toImageMsg();
         if(msg)
         {
           pub.publish(msg); 

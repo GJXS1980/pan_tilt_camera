@@ -40,3 +40,15 @@ sudo apt-get install libopencv-dev
 | d | 云台右转 | 无 |
 | f | 截图 | 需要修改launch文件中的image_name为可执行路径 |
 
+发布话题控制：
+1.控制云台上仰
+rostopic pub -r 100 /Camera_Control_TOPIC std_msgs/String "data: 'w'" 
+
+2.控制云台下俯
+rostopic pub -r 100 /Camera_Control_TOPIC std_msgs/String "data: 's'" 
+
+3.控制云台左转
+rostopic pub -r 100 /Camera_Control_TOPIC std_msgs/String "data: 'a'" 
+
+4.控制云台右转
+rostopic pub -r 100 /Camera_Control_TOPIC std_msgs/String "data: 'd'" 

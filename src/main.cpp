@@ -4,10 +4,8 @@
 #include <opencv2/imgproc.hpp>
 #include <cv_bridge/cv_bridge.h>
 #include <image_transport/image_transport.h>
-//#include <QDir>
 #include <fstream>
 #include <unistd.h>
-//#include "auto_entercs.h"
 #include <pthread.h> 
 #include <iostream>
 #include "HCNetSDK.h"
@@ -15,7 +13,6 @@
 #include "LinuxPlayM4.h"
 #include "CapPicture.h"
 #include "playback.h"
-
 
 #include <termios.h> 
 #include <unistd.h>
@@ -30,12 +27,17 @@
 #include <std_msgs/String.h>
 #include <pthread.h>
 
-
 #define HPR_ERROR       -1
 #define HPR_OK           0
 #define USECOLOR         0
+#define key_ESC 27
 
 using namespace std;
+
+static cv::Mat dst;
+cv::Mat image;
+cv::Mat dst_img;
+cv::Mat imgResize;
 
 string cam_ip;    //用于获取launch传递函数
 string user_name;    //用于获取launch传递函数
@@ -46,12 +48,19 @@ string record_dat;    //用于获取launch传递函数
 string image_name;
 string image_type;
 
-using namespace std;
-static cv::Mat dst;
-cv::Mat image;
-cv::Mat dst_img;
+int Init_runing = 1;
+int Camera_runing = 1;
+int video_recording = 0; 
 
-cv::Mat imgResize;
+char key = 0; // 云台控制
+int key_runing = 1;
+static int num = 0;
+static struct termios initial_settings, new_settings;
+static int peek_character = -1;         /* 用于测试一个按键是否被按下 */
+static int peek_char = -1;         /* 用于测试一个按键是否被按下 */
+
+string dir;
+FILE *g_pFile = NULL;
 HWND h = NULL;
 LONG nPort=-1;
 LONG lUserID;
@@ -59,39 +68,20 @@ LONG lUserID;
 pthread_mutex_t mutex_cam;
 std::list<cv::Mat> g_frameList;
 
-#define key_ESC 27
-
 image_transport::Publisher pub; //  发布图像话题
 //　发布图像数据
 sensor_msgs::ImagePtr msg;
-
-void init_keyboard();
-
-void close_keyboard();
-
-int kbhit();
-static int num = 0;
-
-// char dir[50]={0};
-string dir;
-
-int readch(); /* 相关函数声明 */
-
-static struct termios initial_settings, new_settings;
-int video_recording = 0; 
-
-static int peek_character = -1;         /* 用于测试一个按键是否被按下 */
-static int peek_char = -1;         /* 用于测试一个按键是否被按下 */
-
 ros::Subscriber Camera_Control_Sub; 
 
+void init_keyboard();
+void close_keyboard();
+int kbhit();
+int readch(); /* 相关函数声明 */
 // 读取视频流回调函数
 static void CALLBACK g_RealDataCallBack_V30(LONG lRealHandle, DWORD dwDataType, BYTE *pBuffer, DWORD dwBufSize,void* dwUser);
 // 预览重连回调函数
 static void CALLBACK g_ExceptionCallBack(DWORD dwType, LONG lUserID, LONG lHandle, void *pUser); 
- 
-FILE *g_pFile = NULL;
- 
+
 /*
 功能：写入头数据
 备注：云台、API
@@ -108,7 +98,6 @@ void CALLBACK PsDataCallBack(LONG lRealHandle, DWORD dwDataType,BYTE *pPacketBuf
       printf("CreateFileHead fail\n");
       return;
     }
- 
     //写入头数据
     fwrite(pPacketBuffer, sizeof(unsigned char), nPacketSize, g_pFile);
     printf("write head len=%d\n", nPacketSize);
@@ -179,14 +168,12 @@ void CALLBACK g_RealDataCallBack_V30(LONG lRealHandle, DWORD dwDataType, BYTE *p
         dRet = PlayM4_GetLastError(nPort);
         break;
       }
- 
       //打开视频解码，播放开始
       if (!PlayM4_Play(nPort, h))
       {
         dRet = PlayM4_GetLastError(nPort);
         break;
       }
- 
       //打开音频解码, 需要码流是复合流
       if (!PlayM4_PlaySound(nPort)) 
       {
@@ -211,7 +198,6 @@ void CALLBACK g_RealDataCallBack_V30(LONG lRealHandle, DWORD dwDataType, BYTE *p
    }
 }
  
-
 /*
 功能：预览时重连回调
 备注：无
@@ -230,7 +216,6 @@ void CALLBACK g_ExceptionCallBack(DWORD dwType, LONG lUserID, LONG lHandle, void
   }
 }
 
-int Init_runing = 1;
 /****************************************************************
 函数功能：初始化SDK，用户注册设备
 ****************************************************************/
@@ -295,7 +280,6 @@ void *CameraInit(void *)
 功能：相机图像发布线程
 备注：相机图像
 */ 
-int Camera_runing = 1;
 void *RunIPCameraInfo(void*)
 {
   // 将自己设置为分离状态
@@ -335,8 +319,6 @@ void *RunIPCameraInfo(void*)
 功能：键盘输入获取线程
 备注：键盘
 */ 
-char key = 0;
-int key_runing = 1;
 void *capture_keyvalue(void*)
 {
   // 将自己设置为分离状态
@@ -387,7 +369,6 @@ int kbhit()
   return(0);
 }
 
-
 /*
 功能：捕获键盘输入
 备注：键盘
@@ -434,7 +415,8 @@ void close_keyboard()
 
 void Camera_Control_Callback(const std_msgs::String::ConstPtr& cmd)
 {
-  string temp = cmd->data;
+  string temp = cmd -> data;
+  // cout << temp[0] << endl;
   key = temp[0];
 }
 
@@ -455,7 +437,7 @@ int main(int argc,char **argv)
 	nh.param("image_name", image_name, std::string("./img/image_"));    //从launch文件获取参数
 	nh.param("image_type", image_type, std::string(".jpeg"));    //从launch文件获取参数
 
-  Camera_Control_Sub = n.subscribe("/Camera_Control_TOPIC", 10, &Camera_Control_Callback);	 
+  Camera_Control_Sub = n.subscribe("/Camera_Control_TOPIC", 1, &Camera_Control_Callback);	 
   image_transport::ImageTransport it(n);
   pub = it.advertise("camera/image", 10);
   pthread_t camerainit;
@@ -490,6 +472,7 @@ int main(int argc,char **argv)
   }  
 
   bool sw = true;
+  
   
   //ros::Rate loop_rate(100);	
   while(ros::ok())
@@ -642,11 +625,9 @@ int main(int argc,char **argv)
                   break;
 
 	  }	
-    // printf(" wait %d\n", key);
-    // key = 0;
-    
-	  // ros::spinOnce();//循环等待回调函数
+	  ros::spinOnce();//循环等待回调函数
   }
+
   close_keyboard();	
   Init_runing = 0;
   key_runing = 0;
