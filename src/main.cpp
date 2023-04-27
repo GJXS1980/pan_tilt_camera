@@ -26,6 +26,8 @@
 #include <std_msgs/Int32MultiArray.h>
 #include <std_msgs/String.h>
 #include <pthread.h>
+#include <sys/select.h>
+#include <termios.h>
 
 #define HPR_ERROR       -1
 #define HPR_OK           0
@@ -73,9 +75,7 @@ image_transport::Publisher pub; //  发布图像话题
 sensor_msgs::ImagePtr msg;
 ros::Subscriber Camera_Control_Sub; 
 
-void init_keyboard();
 void close_keyboard();
-int kbhit();
 int readch(); /* 相关函数声明 */
 // 读取视频流回调函数
 static void CALLBACK g_RealDataCallBack_V30(LONG lRealHandle, DWORD dwDataType, BYTE *pBuffer, DWORD dwBufSize,void* dwUser);
@@ -243,6 +243,7 @@ void *CameraInit(void *)
   {
     printf("###########<<Login error>>########## erro code: %d\n", NET_DVR_GetLastError());
     NET_DVR_Cleanup();
+    pthread_exit(NULL);
   }
 
   NET_DVR_SetExceptionCallBack_V30(0, NULL, g_ExceptionCallBack, NULL);
@@ -266,10 +267,13 @@ void *CameraInit(void *)
   {
     printf("pyd1---NET_DVR_RealPlay_V30 error\n");
   }
-  while(Init_runing)
+
+  //  让线程每隔 1 秒钟休眠一次，避免了不必要的 CPU 占用
+  while (Init_runing)
   {
-    int a;
+      sleep(1);
   }
+
   // sleep(-1);  //sleep 无限时间
   // 释放SDK资源
   NET_DVR_Cleanup();
@@ -283,90 +287,87 @@ void *CameraInit(void *)
 void *RunIPCameraInfo(void*)
 {
   // 将自己设置为分离状态
-  pthread_detach(pthread_self());   
+  pthread_detach(pthread_self());
+
+  cv::Mat image;
+  cv::Mat dst_img;
 
   while(Camera_runing)
   {
     pthread_mutex_lock(&mutex_cam);
-    if(g_frameList.size())
+    if(!g_frameList.empty())
     {
-      std::list<cv::Mat>::iterator it;
-      it = g_frameList.end();
-      it--;
-      image = (*(it));
+      // 使用 std::list::back() 方法获取最后一个元素
+      // 使用 cv::Mat::clone()从 image 复制到 dst_img 
+      image = g_frameList.back().clone();
+      // 清空所有帧
+      g_frameList.clear();
+
       if (!image.empty())
       {
         //  修改图片尺寸大小（像素为640*480）
         cv::resize(image, dst_img,  cv::Size(640, 480), 0, 0, cv::INTER_LINEAR);
         imshow("image", dst_img);  
 
-        msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", dst_img).toImageMsg();
+        auto msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", dst_img).toImageMsg();
         if(msg)
         {
           pub.publish(msg); 
         }
-        cv::waitKey(1);
       }
-      g_frameList.pop_front();
     }
-    g_frameList.clear(); // 丢掉旧的帧
-    pthread_mutex_unlock(&mutex_cam); 
-  }
-	pthread_exit(NULL);
-}
+    pthread_mutex_unlock(&mutex_cam);
 
-/*
-功能：键盘输入获取线程
-备注：键盘
-*/ 
-void *capture_keyvalue(void*)
-{
-  // 将自己设置为分离状态
-  pthread_detach(pthread_self());  
-  while(key_runing)
-  {
-    if (kbhit())
-    {
-      key = readch(); 
-      // printf("test ch %d \n", key);
-	    if(key == 3)
-	    {
-        close_keyboard();
-        key_runing = 0;
-        Camera_runing = 0;  
-  	  }
-    }
-  }	
-  close_keyboard();	
+    cv::waitKey(10);
+  }
+
   pthread_exit(NULL);
 }
 
 /*
-功能：判断是否有键盘按下
+功能：设置终端为非阻塞模式,让程序在没有键盘输入时进入休眠状态，降低 CPU 占用率
 备注：键盘
 */ 
-int kbhit()
+void set_non_blocking()
 {
-  char ch = NULL;
-  int nread = 0;
-  if ( peek_character != -1 )
+  struct termios term;
+  tcgetattr(STDIN_FILENO, &term);
+  term.c_lflag &= ~(ICANON | ECHO);
+  term.c_cc[VMIN] = 0;
+  term.c_cc[VTIME] = 0;
+  tcsetattr(STDIN_FILENO, TCSANOW, &term);
+}
+
+void *capture_keyvalue(void*)
+{
+  // 将自己设置为分离状态
+  pthread_detach(pthread_self());  
+
+  set_non_blocking(); // 设置终端为非阻塞模式
+
+  while(key_runing)
   {
-    peek_character = -1;
-    return(1);
-  }
-    
-  new_settings.c_cc[VMIN] = 0;
-  tcsetattr(0, TCSANOW, &new_settings);
-  nread = read(0, &ch, 1);
-  new_settings.c_cc[VMIN] = 1;
-  tcsetattr(0, TCSANOW, &new_settings);
-  if ( nread == 1 )
-  {
-    peek_character = ch;
-    // printf("test nread %d \n", nread);
-    return(1);
-  }
-  return(0);
+    fd_set rfds;
+    FD_ZERO(&rfds);
+    FD_SET(STDIN_FILENO, &rfds);
+
+    struct timeval tv = { 0, 0 };
+    select(STDIN_FILENO + 1, &rfds, NULL, NULL, &tv);
+
+    if (FD_ISSET(STDIN_FILENO, &rfds))
+    {
+      key = readch(); 
+      // printf("test ch %d \n", key);
+      if(key == 3)
+      {
+        close_keyboard();
+        key_runing = 0;
+        Camera_runing = 0;  
+      }
+    }
+  }	
+  close_keyboard();	
+  pthread_exit(NULL);
 }
 
 /*
@@ -386,22 +387,6 @@ int readch()
   }
   read( 0, &ch, 1 );
   return(ch);
-}
-
-/*
-功能：终端配置
-备注：键盘
-*/
-void init_keyboard()
-{
-  tcgetattr( 0, &initial_settings );
-  new_settings = initial_settings;
-  new_settings.c_lflag &= ~ICANON;
-  new_settings.c_lflag &= ~ECHO;
-  new_settings.c_lflag &= ~ISIG;
-  new_settings.c_cc[VMIN] = 1;
-  new_settings.c_cc[VTIME] = 0;
-  tcsetattr( 0, TCSANOW, &new_settings );
 }
 
 /*
@@ -427,6 +412,8 @@ int main(int argc,char **argv)
   ros::NodeHandle n;		//创建句柄	
   ros::NodeHandle nh("~");    //用于launch文件传递参数
 
+  ros::Rate loop_rate(10); 
+
 	nh.param("cam_ip", cam_ip, std::string("192.168.5.64"));    //从launch文件获取appid参数
 	nh.param("user_name", user_name, std::string("admin"));    //从launch文件获取参数
 	nh.param("password", password, std::string("abcd1234"));    //从launch文件获取参数
@@ -450,8 +437,6 @@ int main(int argc,char **argv)
   char * jpeg = (char *)image_type.data();
 
   int ret;
-  init_keyboard();
-
   pthread_mutex_init(&mutex_cam, NULL); 
   ret = pthread_create(&camerainit, NULL, CameraInit, NULL);  //  创建摄像头初始化线程
   if(ret!=0)
@@ -477,6 +462,7 @@ int main(int argc,char **argv)
   //ros::Rate loop_rate(100);	
   while(ros::ok())
   {
+    loop_rate.sleep();
     switch(key)
     {
       // 焦距变大(倍率变大)
