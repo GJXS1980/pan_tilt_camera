@@ -71,7 +71,7 @@ pthread_mutex_t mutex_cam;
 std::list<cv::Mat> g_frameList;
 
 image_transport::Publisher pub; //  发布图像话题
-//　发布图像数据
+// 发布图像数据
 sensor_msgs::ImagePtr msg;
 ros::Subscriber Camera_Control_Sub; 
 
@@ -219,67 +219,52 @@ void CALLBACK g_ExceptionCallBack(DWORD dwType, LONG lUserID, LONG lHandle, void
 /****************************************************************
 函数功能：初始化SDK，用户注册设备
 ****************************************************************/
-void *CameraInit(void *)
+void CameraInitOnce() 
 {
-	char * LOG   = (char *)user_log.data(); //离线语法识别资源路径
-	char * RECORD   = (char *)record_video.data(); //离线语法识别资源路径
-  char *IP     = (char *)cam_ip.data();   //海康威视网络摄像头的ip
-  char *UName  = (char *)user_name.data();     //海康威视网络摄像头的用户名
-  char *PSW    = (char *)password.data();      //海康威视网络摄像头的密码
-  //  将自己设置为分离状态
-  pthread_detach(pthread_self());  
+  char * LOG = (char *)user_log.data(); // 离线语法识别资源路径
+  char * RECORD = (char *)record_video.data(); // 离线语法识别资源路径
+  char *IP = (char *)cam_ip.data(); // 海康威视网络摄像头的ip
+  char *UName = (char *)user_name.data(); // 海康威视网络摄像头的用户名
+  char *PSW = (char *)password.data(); // 海康威视网络摄像头的密码
 
-  NET_DVR_Init(); //  初始化SDK
-  //  设置连接时间与重连时间
+  NET_DVR_Init(); // 初始化SDK
+  // 设置连接时间与重连时间
   NET_DVR_SetConnectTime(2000, 1);
   NET_DVR_SetReconnect(1000, true);
-  //  设置日志保存路径
+  // 设置日志保存路径
   NET_DVR_SetLogToFile(3, LOG);
 
   NET_DVR_DEVICEINFO_V30 struDeviceInfo = {0};
   NET_DVR_SetRecvTimeOut(5000);
-  lUserID = NET_DVR_Login_V30(IP, 8000, UName, PSW, &struDeviceInfo); //  用户注册设备
-  if (lUserID < 0)
-  {
+  lUserID = NET_DVR_Login_V30(IP, 8000, UName, PSW, &struDeviceInfo); // 用户注册设备
+  if (lUserID < 0) {
     printf("###########<<Login error>>########## erro code: %d\n", NET_DVR_GetLastError());
     NET_DVR_Cleanup();
-    pthread_exit(NULL);
+    exit(-1); // 初始化失败，直接退出程序
   }
 
   NET_DVR_SetExceptionCallBack_V30(0, NULL, g_ExceptionCallBack, NULL);
- 
+
   long lRealPlayHandle;
   NET_DVR_CLIENTINFO ClientInfo = {0};
- 
-  ClientInfo.lChannel       = 1;  //预览通道号
-  ClientInfo.lLinkMode     = 0;   //0-TCP方式，1-UDP方式，2-多播方式，3-RTP方式，4-RTP/RTSP，5-RSTP/HTTP
-  ClientInfo.hPlayWnd     = 0;    //需要SDK解码时句柄设为有效值，仅取流不解码时可设为空
+
+  ClientInfo.lChannel = 1; // 预览通道号
+  ClientInfo.lLinkMode = 0; // 0-TCP方式，1-UDP方式，2-多播方式，3-RTP方式，4-RTP/RTSP，5-RSTP/HTTP
+  ClientInfo.hPlayWnd = 0; // 需要SDK解码时句柄设为有效值，仅取流不解码时可设为空
   ClientInfo.sMultiCastIP = NULL;
- 
+
   // 启动预览
   lRealPlayHandle = NET_DVR_RealPlay_V30(lUserID, &ClientInfo, g_RealDataCallBack_V30, NULL, 0);
-  if (video_recording)
-  {
-	  NET_DVR_SaveRealData(lRealPlayHandle, RECORD);
+  if (video_recording) {
+    NET_DVR_SaveRealData(lRealPlayHandle, RECORD);
   }
 
-  if (lRealPlayHandle < 0)
-  {
+  if (lRealPlayHandle < 0) {
     printf("pyd1---NET_DVR_RealPlay_V30 error\n");
   }
-
-  //  让线程每隔 1 秒钟休眠一次，避免了不必要的 CPU 占用
-  while (Init_runing)
-  {
-      sleep(1);
-  }
-
-  // sleep(-1);  //sleep 无限时间
-  // 释放SDK资源
-  NET_DVR_Cleanup();
-  pthread_exit(NULL);
 }
- 
+
+
 /*
 功能：相机图像发布线程
 备注：相机图像
@@ -317,10 +302,8 @@ void *RunIPCameraInfo(void*)
       }
     }
     pthread_mutex_unlock(&mutex_cam);
-
     cv::waitKey(10);
   }
-
   pthread_exit(NULL);
 }
 
@@ -346,22 +329,19 @@ void *capture_keyvalue(void*)
 {
   // 将自己设置为分离状态
   pthread_detach(pthread_self());  
-
   set_non_blocking(); // 设置终端为非阻塞模式
-
   while(key_runing)
   {
     fd_set rfds;
     FD_ZERO(&rfds);
     FD_SET(STDIN_FILENO, &rfds);
 
-    struct timeval tv = { 0, 0 };
+    struct timeval tv = { 0, 100000 }; // 设置 select 的超时时间为 100ms(线程在没有输入的情况下暂停 100ms,避免不必要的 CPU 占用)
     select(STDIN_FILENO + 1, &rfds, NULL, NULL, &tv);
 
     if (FD_ISSET(STDIN_FILENO, &rfds))
     {
       key = readch(); 
-      // printf("test ch %d \n", key);
       if(key == 3)
       {
         close_keyboard();
@@ -373,6 +353,7 @@ void *capture_keyvalue(void*)
   close_keyboard();	
   pthread_exit(NULL);
 }
+
 
 /*
 功能：捕获键盘输入
@@ -386,7 +367,6 @@ int readch()
   {
     ch = peek_character;
     peek_character = -1;
-    // printf("test ch %d \n", ch);
     return(ch);
   }
   read( 0, &ch, 1 );
@@ -413,7 +393,6 @@ void close_keyboard()
 void Camera_Control_Callback(const std_msgs::String::ConstPtr& cmd)
 {
   string temp = cmd -> data;
-  // cout << temp[0] << endl;
   key = temp[0];
 }
 
@@ -440,22 +419,11 @@ int main(int argc,char **argv)
   image_transport::ImageTransport it(n);
   pub = it.advertise("camera/image", 10);
   pthread_t camerainit;
-  pthread_t getframe; 
   pthread_t input_key;
 	
-  // char  name[]= "./img/image_";
-  // char  jpeg[]=".jpeg";	
-  char * name = (char *)image_name.data();
-  char * jpeg = (char *)image_type.data();
-
   int ret;
   pthread_mutex_init(&mutex_cam, NULL); 
-  ret = pthread_create(&camerainit, NULL, CameraInit, NULL);  //  创建摄像头初始化线程
-  if(ret!=0)
-  {
-    printf("Create pthread error!\n");
-  }
-  
+  CameraInitOnce(); //  初始化相机
   ret = pthread_create(&camerainit, NULL, RunIPCameraInfo, NULL); //  创建图像显示与发布线程
   if(ret!=0)
   {
@@ -468,10 +436,6 @@ int main(int argc,char **argv)
     printf("Create pthread error!\n");
   }  
 
-  bool sw = true;
-  
-  
-  //ros::Rate loop_rate(100);	
   while(ros::ok())
   {
     loop_rate.sleep();
@@ -481,8 +445,6 @@ int main(int argc,char **argv)
       case '1': 	NET_DVR_PTZControl_Other(lUserID, 1, ZOOM_IN, 0);	
                   usleep(10);
                   key = 117;
-                  // NET_DVR_PTZControl_Other(lUserID, 1, ZOOM_IN, 1);	
-                  // printf(" wait %s\n", key);
                   break;
       case 'u': 	NET_DVR_PTZControl_Other(lUserID, 1, ZOOM_IN, 1);	
                   break;
@@ -541,15 +503,11 @@ int main(int argc,char **argv)
       //接通雨刷开关
       case '8':   
                   NET_DVR_PTZControl_Other(lUserID, 1, WIPER_PWRON, 0); 
-                  // usleep(10);
-                  // key = 107; 
 		              break;
 
       //关闭雨刷开关
       case '9':   
                   NET_DVR_PTZControl_Other(lUserID, 1, WIPER_PWRON, 1); 
-                  // usleep(10);
-                  // key = 107; 
 		              break;
 
       //云台上仰
@@ -583,7 +541,6 @@ int main(int argc,char **argv)
                   {
                     num += 1;
                     dir = image_name + std::to_string(num) + image_type;
-                    // sprintf(dir,"%s%d%s",name,num,jpeg);
                     cv::imwrite(dir, image);
                     printf("save current image!");
                   }
@@ -596,7 +553,6 @@ int main(int argc,char **argv)
 	    case 'v':   video_recording = !video_recording;		//录制视频
 			            if(video_recording)	printf(" start video recording\n");
 			            else 			printf(" stop video recording\n");
-                  // NET_DVR_Cleanup();
 			            break;
 
       // 停止云台上仰
@@ -631,6 +587,7 @@ int main(int argc,char **argv)
   key_runing = 0;
   Camera_runing = 0; 
   pthread_exit(NULL);
+  NET_DVR_Cleanup();  // 释放资源,防止内存泄漏
   return 0;
  
 exit:
@@ -639,5 +596,6 @@ exit:
   key_runing = 0;
   Camera_runing = 0; 
   pthread_exit(NULL);
+  NET_DVR_Cleanup();  // 释放资源,防止内存泄漏
   return 0;
 }

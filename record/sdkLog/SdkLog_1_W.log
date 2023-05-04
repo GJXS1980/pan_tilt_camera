@@ -1,111 +1,61 @@
-[2023-05-04 14:53:05.970][INF] The COM:HCCoreBase ver is 6.1.4.15, 2020_03_05. Async:1.
-[2023-05-04 14:53:05.970][INF] The COM:Core ver is 6.1.6.4, 2020_12_31. Async:1.
-[2023-05-04 14:53:05.970][INF] This HCNetSDK ver is 6.1.6.4 Ver 2020_12_31.
-[2023-05-04 14:53:05.970][INF] Login dev 192.168.1.64:8000.
-[2023-05-04 14:53:05.970][INF] dwTotalNum[2048]
-[2023-05-04 14:53:05.971][INF] Private connect 192.168.1.64:8000 sock=45 this=0xf80ebe24 cmd=0x10000 port=46876
-[2023-05-04 14:53:05.971][INF] LogonDev1 in[192.168.1.64:8000]
-[2023-05-04 14:53:05.972][DBG] CCoreGlobalCtrlBase::LoadDSo, HPR_LoadDSo Succ, Path[/home/grantli/test_ws/src/pan_tilt_camera/lib/libcrypto.so], hHandleRet[-133210800]
-[2023-05-04 14:53:05.973][DBG] CCoreGlobalCtrlBase::LoadDSo, HPR_LoadDSo Succ, Path[/home/grantli/test_ws/src/pan_tilt_camera/lib/libssl.so], hHandleRet[-133209184]
-[2023-05-04 14:53:05.973][INF] SSLTRANSAPI::LoadAPI, libeay, Load Real Path[/home/grantli/test_ws/src/pan_tilt_camera/lib/libcrypto.so]
-[2023-05-04 14:53:05.973][INF] SSLTRANSAPI::LoadAPI, libssl, Load Real Path[/home/grantli/test_ws/src/pan_tilt_camera/lib/libssl.so]
-[2023-05-04 14:53:05.973][ERR] SSLTRANSAPI::IsAllAPILoaded, OpenSSL_version Unload
-[2023-05-04 14:53:05.973][ERR] OpenSSL, Not All Function Loaded!
-[2023-05-04 14:53:05.974][INF] SSLTRANSAPI::PrintVersion, SSLeay_version info [OpenSSL 1.0.2t  10 Sep 2019]
-[2023-05-04 14:53:05.974][INF] CSSLTrans::SSLCtxInit, dwSSLVersion[0], m_fnClientMethodV23
-[2023-05-04 14:53:06.040][DBG] CComBase::Load, Load szDllPath[/home/grantli/test_ws/src/pan_tilt_camera/lib/HCNetSDKCom/libHCPreview.so] SUCC
-[2023-05-04 14:53:06.040][INF] AbilityAnalyze---Init-- start
-[2023-05-04 14:53:06.042][DBG] AbilityAnalyze---Init-- over, DeviceList path [/home/grantli/test_ws/src/pan_tilt_camera/lib/HCNetSDKCom/LocalXml/DeviceList.xml], load result[0]
-[2023-05-04 14:53:06.042][INF] The COM:Preview ver is 6.1.6.4, 2020_12_31.
-[2023-05-04 14:53:06.043][INF] Private connect 192.168.1.64:8000 sock=45 this=0xf80ebe24 cmd=0x30000 port=46878
-[2023-05-04 14:53:06.045][INF] ID-IP-CHAN[0-192.168.1.64-1] [CGetTCPStream::Start] Stream Head Data Callback Start
-[2023-05-04 14:53:06.045][INF] ID-IP-CHAN[0-192.168.1.64-1] [CGetTCPStream::Start] Stream Head Data Callback End
-[2023-05-04 14:53:18.401][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46880
-[2023-05-04 14:53:18.501][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46882
-[2023-05-04 14:53:18.601][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46884
-[2023-05-04 14:53:18.701][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46886
-[2023-05-04 14:53:18.801][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46888
-[2023-05-04 14:53:18.901][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46890
-[2023-05-04 14:53:19.001][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46892
-[2023-05-04 14:53:19.101][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46894
-[2023-05-04 14:53:19.201][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46896
-[2023-05-04 14:53:19.301][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46898
-[2023-05-04 14:53:19.401][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46900
-[2023-05-04 14:53:19.501][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46902
-[2023-05-04 14:53:19.601][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46904
-[2023-05-04 14:53:19.701][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46906
-[2023-05-04 14:53:19.801][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46908
-[2023-05-04 14:53:19.901][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46910
-[2023-05-04 14:53:20.001][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46912
-[2023-05-04 14:53:20.101][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46914
-[2023-05-04 14:53:20.201][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46916
-[2023-05-04 14:53:20.301][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46918
-[2023-05-04 14:53:20.401][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46920
-[2023-05-04 14:53:20.501][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46922
-[2023-05-04 14:53:20.601][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46926
-[2023-05-04 14:53:20.701][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46928
-[2023-05-04 14:53:20.801][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46930
-[2023-05-04 14:53:20.901][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46932
-[2023-05-04 14:53:21.001][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46934
-[2023-05-04 14:53:21.101][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46936
-[2023-05-04 14:53:21.201][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46940
-[2023-05-04 14:53:21.301][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46942
-[2023-05-04 14:53:21.401][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46944
-[2023-05-04 14:53:21.501][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46946
-[2023-05-04 14:53:21.601][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46948
-[2023-05-04 14:53:21.701][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46950
-[2023-05-04 14:53:21.801][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46952
-[2023-05-04 14:53:21.901][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46954
-[2023-05-04 14:53:22.001][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46956
-[2023-05-04 14:53:22.101][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46958
-[2023-05-04 14:53:22.201][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46960
-[2023-05-04 14:53:22.301][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46962
-[2023-05-04 14:53:22.401][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46964
-[2023-05-04 14:53:22.501][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46966
-[2023-05-04 14:53:22.601][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46968
-[2023-05-04 14:53:22.701][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46970
-[2023-05-04 14:53:22.801][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46972
-[2023-05-04 14:53:22.901][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46974
-[2023-05-04 14:53:23.001][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46976
-[2023-05-04 14:53:23.101][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46978
-[2023-05-04 14:53:23.201][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46980
-[2023-05-04 14:53:23.301][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46982
-[2023-05-04 14:53:23.401][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46986
-[2023-05-04 14:53:23.501][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46988
-[2023-05-04 14:53:23.601][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46990
-[2023-05-04 14:53:23.701][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46992
-[2023-05-04 14:53:23.801][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46994
-[2023-05-04 14:53:23.901][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46996
-[2023-05-04 14:53:24.001][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=46998
-[2023-05-04 14:53:24.101][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=47000
-[2023-05-04 14:53:24.201][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=47002
-[2023-05-04 14:53:24.301][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=47004
-[2023-05-04 14:53:24.401][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=47006
-[2023-05-04 14:53:24.501][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=47008
-[2023-05-04 14:53:24.601][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=47010
-[2023-05-04 14:53:24.701][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=47012
-[2023-05-04 14:53:24.801][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=47014
-[2023-05-04 14:53:24.901][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=47016
-[2023-05-04 14:53:25.001][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=47018
-[2023-05-04 14:53:25.101][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=47020
-[2023-05-04 14:53:25.201][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=47022
-[2023-05-04 14:53:25.301][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=47026
-[2023-05-04 14:53:25.401][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=47028
-[2023-05-04 14:53:25.501][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=47030
-[2023-05-04 14:53:25.601][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=47032
-[2023-05-04 14:53:25.701][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=47034
-[2023-05-04 14:53:25.801][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=47036
-[2023-05-04 14:53:25.901][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=47038
-[2023-05-04 14:53:26.001][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=47040
-[2023-05-04 14:53:26.101][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=47042
-[2023-05-04 14:53:26.201][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=47044
-[2023-05-04 14:53:26.301][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=47046
-[2023-05-04 14:53:26.401][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=47048
-[2023-05-04 14:53:26.501][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=47052
-[2023-05-04 14:53:26.601][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=47054
-[2023-05-04 14:53:26.701][INF] Private connect 192.168.1.64:8000 sock=59 this=0xf80ec408 cmd=0x30203 port=47056
-[2023-05-04 14:53:26.801][INF] Private connect 192.168.1.64:8000 sock=4 this=0xf80ec408 cmd=0x30203 port=47058
-[2023-05-04 14:53:27.070][INF] CTransUnitMgr::UnloadTransUnitLib
-[2023-05-04 14:53:27.070][ERR] Interim_UnRigisterTimerProxy, pProxy == NULL, iProxyID[1]
-[2023-05-04 14:53:27.090][DBG] CUserMgr::UnRegisterHeartProxy[0]
-[2023-05-04 14:53:27.091][INF] Private connect 192.168.1.64:8000 sock=4 this=0xf80ebe24 cmd=0x10100 port=47060
+[2023-05-04 15:42:28.052][INF] The COM:HCCoreBase ver is 6.1.4.15, 2020_03_05. Async:1.
+[2023-05-04 15:42:28.052][INF] The COM:Core ver is 6.1.6.4, 2020_12_31. Async:1.
+[2023-05-04 15:42:28.052][INF] This HCNetSDK ver is 6.1.6.4 Ver 2020_12_31.
+[2023-05-04 15:42:28.052][INF] Login dev 192.168.1.64:8000.
+[2023-05-04 15:42:28.052][INF] dwTotalNum[2048]
+[2023-05-04 15:42:28.053][INF] Private connect 192.168.1.64:8000 sock=45 this=0x53d43ff4 cmd=0x10000 port=48420
+[2023-05-04 15:42:28.053][INF] LogonDev1 in[192.168.1.64:8000]
+[2023-05-04 15:42:28.054][DBG] CCoreGlobalCtrlBase::LoadDSo, HPR_LoadDSo Succ, Path[/home/grantli/test_ws/src/pan_tilt_camera/lib/libcrypto.so], hHandleRet[1406459600]
+[2023-05-04 15:42:28.055][DBG] CCoreGlobalCtrlBase::LoadDSo, HPR_LoadDSo Succ, Path[/home/grantli/test_ws/src/pan_tilt_camera/lib/libssl.so], hHandleRet[1406461152]
+[2023-05-04 15:42:28.055][INF] SSLTRANSAPI::LoadAPI, libeay, Load Real Path[/home/grantli/test_ws/src/pan_tilt_camera/lib/libcrypto.so]
+[2023-05-04 15:42:28.055][INF] SSLTRANSAPI::LoadAPI, libssl, Load Real Path[/home/grantli/test_ws/src/pan_tilt_camera/lib/libssl.so]
+[2023-05-04 15:42:28.055][ERR] SSLTRANSAPI::IsAllAPILoaded, OpenSSL_version Unload
+[2023-05-04 15:42:28.055][ERR] OpenSSL, Not All Function Loaded!
+[2023-05-04 15:42:28.056][INF] SSLTRANSAPI::PrintVersion, SSLeay_version info [OpenSSL 1.0.2t  10 Sep 2019]
+[2023-05-04 15:42:28.056][INF] CSSLTrans::SSLCtxInit, dwSSLVersion[0], m_fnClientMethodV23
+[2023-05-04 15:42:28.133][DBG] CComBase::Load, Load szDllPath[/home/grantli/test_ws/src/pan_tilt_camera/lib/HCNetSDKCom/libHCPreview.so] SUCC
+[2023-05-04 15:42:28.133][INF] AbilityAnalyze---Init-- start
+[2023-05-04 15:42:28.134][DBG] AbilityAnalyze---Init-- over, DeviceList path [/home/grantli/test_ws/src/pan_tilt_camera/lib/HCNetSDKCom/LocalXml/DeviceList.xml], load result[0]
+[2023-05-04 15:42:28.134][INF] The COM:Preview ver is 6.1.6.4, 2020_12_31.
+[2023-05-04 15:42:28.135][INF] Private connect 192.168.1.64:8000 sock=46 this=0x53d43ff4 cmd=0x30000 port=48422
+[2023-05-04 15:42:28.137][INF] ID-IP-CHAN[0-192.168.1.64-1] [CGetTCPStream::Start] Stream Head Data Callback Start
+[2023-05-04 15:42:28.137][INF] ID-IP-CHAN[0-192.168.1.64-1] [CGetTCPStream::Start] Stream Head Data Callback End
+[2023-05-04 15:42:32.084][INF] Private connect 192.168.1.64:8000 sock=59 this=0x53d445d8 cmd=0x30203 port=48424
+[2023-05-04 15:42:32.185][INF] Private connect 192.168.1.64:8000 sock=59 this=0x53d445d8 cmd=0x30203 port=48426
+[2023-05-04 15:42:32.285][INF] Private connect 192.168.1.64:8000 sock=59 this=0x53d445d8 cmd=0x30203 port=48428
+[2023-05-04 15:42:32.385][INF] Private connect 192.168.1.64:8000 sock=59 this=0x53d445d8 cmd=0x30203 port=48430
+[2023-05-04 15:42:32.485][INF] Private connect 192.168.1.64:8000 sock=59 this=0x53d445d8 cmd=0x30203 port=48432
+[2023-05-04 15:42:32.585][INF] Private connect 192.168.1.64:8000 sock=59 this=0x53d445d8 cmd=0x30203 port=48434
+[2023-05-04 15:42:32.685][INF] Private connect 192.168.1.64:8000 sock=59 this=0x53d445d8 cmd=0x30203 port=48436
+[2023-05-04 15:42:32.785][INF] Private connect 192.168.1.64:8000 sock=59 this=0x53d445d8 cmd=0x30203 port=48438
+[2023-05-04 15:42:32.885][INF] Private connect 192.168.1.64:8000 sock=59 this=0x53d445d8 cmd=0x30203 port=48440
+[2023-05-04 15:42:32.985][INF] Private connect 192.168.1.64:8000 sock=59 this=0x53d445d8 cmd=0x30203 port=48442
+[2023-05-04 15:42:33.085][INF] Private connect 192.168.1.64:8000 sock=59 this=0x53d445d8 cmd=0x30203 port=48444
+[2023-05-04 15:42:33.185][INF] Private connect 192.168.1.64:8000 sock=59 this=0x53d445d8 cmd=0x30203 port=48446
+[2023-05-04 15:42:33.284][INF] Private connect 192.168.1.64:8000 sock=59 this=0x53d445d8 cmd=0x30203 port=48448
+[2023-05-04 15:42:33.385][INF] Private connect 192.168.1.64:8000 sock=59 this=0x53d445d8 cmd=0x30203 port=48450
+[2023-05-04 15:42:33.485][INF] Private connect 192.168.1.64:8000 sock=59 this=0x53d445d8 cmd=0x30203 port=48452
+[2023-05-04 15:42:33.585][INF] Private connect 192.168.1.64:8000 sock=59 this=0x53d445d8 cmd=0x30203 port=48454
+[2023-05-04 15:42:33.685][INF] Private connect 192.168.1.64:8000 sock=59 this=0x53d445d8 cmd=0x30203 port=48456
+[2023-05-04 15:42:33.785][INF] Private connect 192.168.1.64:8000 sock=59 this=0x53d445d8 cmd=0x30203 port=48458
+[2023-05-04 15:42:34.385][INF] Private connect 192.168.1.64:8000 sock=59 this=0x53d445d8 cmd=0x30203 port=48460
+[2023-05-04 15:42:34.485][INF] Private connect 192.168.1.64:8000 sock=59 this=0x53d445d8 cmd=0x30203 port=48462
+[2023-05-04 15:42:34.585][INF] Private connect 192.168.1.64:8000 sock=59 this=0x53d445d8 cmd=0x30203 port=48464
+[2023-05-04 15:42:34.685][INF] Private connect 192.168.1.64:8000 sock=59 this=0x53d445d8 cmd=0x30203 port=48466
+[2023-05-04 15:42:34.785][INF] Private connect 192.168.1.64:8000 sock=59 this=0x53d445d8 cmd=0x30203 port=48468
+[2023-05-04 15:42:34.885][INF] Private connect 192.168.1.64:8000 sock=59 this=0x53d445d8 cmd=0x30203 port=48470
+[2023-05-04 15:42:34.985][INF] Private connect 192.168.1.64:8000 sock=59 this=0x53d445d8 cmd=0x30203 port=48472
+[2023-05-04 15:42:35.085][INF] Private connect 192.168.1.64:8000 sock=59 this=0x53d445d8 cmd=0x30203 port=48474
+[2023-05-04 15:42:35.185][INF] Private connect 192.168.1.64:8000 sock=59 this=0x53d445d8 cmd=0x30203 port=48476
+[2023-05-04 15:42:35.285][INF] Private connect 192.168.1.64:8000 sock=59 this=0x53d445d8 cmd=0x30203 port=48478
+[2023-05-04 15:42:35.385][INF] Private connect 192.168.1.64:8000 sock=59 this=0x53d445d8 cmd=0x30203 port=48480
+[2023-05-04 15:42:35.485][INF] Private connect 192.168.1.64:8000 sock=59 this=0x53d445d8 cmd=0x30203 port=48482
+[2023-05-04 15:42:35.585][INF] Private connect 192.168.1.64:8000 sock=59 this=0x53d445d8 cmd=0x30203 port=48484
+[2023-05-04 15:42:35.685][INF] Private connect 192.168.1.64:8000 sock=59 this=0x53d445d8 cmd=0x30203 port=48486
+[2023-05-04 15:42:35.785][INF] Private connect 192.168.1.64:8000 sock=59 this=0x53d445d8 cmd=0x30203 port=48488
+[2023-05-04 15:42:35.885][INF] Private connect 192.168.1.64:8000 sock=59 this=0x53d445d8 cmd=0x30203 port=48492
+[2023-05-04 15:42:35.985][INF] Private connect 192.168.1.64:8000 sock=59 this=0x53d445d8 cmd=0x30203 port=48494
+[2023-05-04 15:42:36.085][INF] Private connect 192.168.1.64:8000 sock=59 this=0x53d445d8 cmd=0x30203 port=48496
+[2023-05-04 15:42:36.185][INF] Private connect 192.168.1.64:8000 sock=59 this=0x53d445d8 cmd=0x30203 port=48498
+[2023-05-04 15:42:36.285][INF] Private connect 192.168.1.64:8000 sock=59 this=0x53d445d8 cmd=0x30203 port=48500
+[2023-05-04 15:42:36.385][INF] Private connect 192.168.1.64:8000 sock=4 this=0x53d445d8 cmd=0x30203 port=48502
