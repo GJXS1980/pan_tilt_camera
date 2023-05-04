@@ -338,6 +338,10 @@ void set_non_blocking()
   tcsetattr(STDIN_FILENO, TCSANOW, &term);
 }
 
+/*
+功能：捕获键盘输入的,当用户按下Ctrl + C时,它会将终端恢复为阻塞模式,并停止相机采集以及线程循环。
+备注：键盘
+*/
 void *capture_keyvalue(void*)
 {
   // 将自己设置为分离状态
@@ -374,7 +378,7 @@ void *capture_keyvalue(void*)
 功能：捕获键盘输入
 备注：键盘
 */
-/* 用来接收按下的按键，并peek_character = -1恢复状态 */
+/* 用来接收按下的按键,并peek_character = -1恢复状态 */
 int readch()
 {
   char ch = NULL;
@@ -395,9 +399,17 @@ int readch()
 */
 void close_keyboard()
 {
-  tcsetattr( 0, TCSANOW, &initial_settings );
+    struct termios initial_settings;
+    tcgetattr(0, &initial_settings);
+    struct termios term = initial_settings;
+    term.c_lflag |= (ICANON | ECHO);
+    tcsetattr(0, TCSANOW, &term);
 }
 
+/*
+功能：键盘回调函数
+备注：话题控制
+*/
 void Camera_Control_Callback(const std_msgs::String::ConstPtr& cmd)
 {
   string temp = cmd -> data;
